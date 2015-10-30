@@ -1,0 +1,3 @@
+component {
+  var test=
+}

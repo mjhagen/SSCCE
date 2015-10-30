@@ -1,0 +1,1 @@
+<cfoutput><p>#rc.test#</p></cfoutput>
