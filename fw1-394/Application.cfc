@@ -1,3 +1,3 @@
 component extends=framework.one {
-  variables.framework.diLocations = "services";
+  variables.framework.diLocations = "controllers,services";
 }
