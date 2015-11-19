@@ -4,7 +4,7 @@ component
   this.datasource = "mingo";
   this.ormEnabled = true;
   this.ormSettings.dbcreate = "dropcreate";
-  this.ormSettings.saveMapping = false;
+  this.ormSettings.saveMapping = true;
 
   function onRequestStart()
   {
