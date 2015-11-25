@@ -1,3 +1,2 @@
-component persistent=true table="first" {
-  property id;
+component extends="base" persistent=true table="first" discriminatorColumn="type" {
 }
