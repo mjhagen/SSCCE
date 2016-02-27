@@ -1,0 +1,1 @@
+<cfquery name="queryInScript" dbType="#options.dbType#" cachedwithin="#options.cachedWithin#">#sql#</cfquery>
