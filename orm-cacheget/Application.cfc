@@ -29,7 +29,7 @@ component {
 
     var cachedA = cacheGet( "a" );
 
-    if( isNull( cachedA )) {
+    if( isNull( cachedA ) || structKeyExists( url, "reload" )) {
       var cachedA = entityLoad( "a" );
       cachePut( "a", cachedA );
       writeOutput( "Cache reloaded" );
