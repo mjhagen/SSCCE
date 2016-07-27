@@ -1,12 +1,7 @@
 component {
   this.name="sscce-searchImplicitScopes";
+  this.clientManagement=true;
 
-  function foo( bar ) {
-      bar = "test";
-      writeDump( arguments );
-      writeDump( local );
-      writeDump( variables );
-  }
-
-  foo();
+  // bypasses searching for a variable in the implicit scopes thus finding the variables defined in the application faster.
+  this.searchImplicitScopes = false;
 }
