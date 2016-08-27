@@ -25,6 +25,27 @@ component accessors="true" {
     return pointers[ "" ].children;
   }
 
+  // added a less hack-y version off the above:
+
+  function lessHackyVersion( ) {
+    var parents = { "" = {} };
+
+    for ( row in testData ) {
+      parents[ row.id ] = { 
+        nodeText = row.nodeText 
+      };
+
+      var parent = parents[ row.parentId ];
+
+      param parent.children=[ ];
+      parent.children.append( parents[ row.id ] );
+    }
+
+    return parents[ "" ].children;
+  }
+
+
+
   function sanityCheck( ) {
     return expectedresult;
   }
