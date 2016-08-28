@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!--
+source:G:\Dropbox\Tools\commandbox\SSCCE\acf-4024472\dog.cfc
+compilation-time:{ts '2016-08-03 21:55:56'}
+datasource:mingo
+-->
+<subclass extends="animal" discriminator-value="dog" node="SSCCE.acf-4024472.dog" entity-name="dog" lazy="true">
+<property name="furColor" type="string">
+<column name="furColor"/>
+</property>
+</subclass>
+</hibernate-mapping>

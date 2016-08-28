@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<!--
+source:C:\Users\mjhagen\Dropbox\Tools\commandbox\SSCCE\lucee-723\models\User.cfc
+compilation-time:{ts '2016-08-25 14:16:44'}
+datasource:__default__
+-->
+<class node="SSCCE.lucee-723.models.User" entity-name="User" lazy="true" table="`User`">
+<id name="id" type="integer">
+<column name="id"/>
+<generator class="native"/>
+</id>
+</class>
+</hibernate-mapping>

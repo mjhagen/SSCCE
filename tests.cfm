@@ -1,9 +1,21 @@
 <cfscript>
+writeOutput("#server.coldfusion.productVersion#<br>");
 
-a = [1,2,3];
-c = createObject( "java", "java.util.Collections" );
-c.reverse(a);
+st = {};
+k = "key";
+try {
+  st[k] = st[k] ?: {};
+} catch (any e){
+  writeOutput("#e.message#<br>");
+} finally {
+  writeDump(st);
+}
 
-writeDump( a );
-
+try {
+  st[k] = st.keyExists(k) ? st[k] : {};
+} catch (any e){
+  writeOutput("#e.message#<br>");
+} finally {
+  writeDump(st);
+}
 </cfscript>
