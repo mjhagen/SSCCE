@@ -6,28 +6,6 @@ component accessors="true" {
   include "includes/source-data.cfm"; // sets testData
 
   function solve( ) {
-    var parent = 0;
-    var pointers = { "" = {} };
-
-    for ( row in testData ) {
-      pointers[ row.id ] = row;
-
-      parent = pointers[ row.parentId ];
-
-      param parent.children=[ ];
-
-      structDelete( row, "id" );
-      structDelete( row, "parentId" );
-
-      arrayAppend( parent.children, row );
-    }
-
-    return pointers[ "" ].children;
-  }
-
-  // added a less hack-y version off the above:
-
-  function lessHackyVersion( ) {
     var parents = { "" = {} };
 
     for ( row in testData ) {
@@ -43,8 +21,6 @@ component accessors="true" {
 
     return parents[ "" ].children;
   }
-
-
 
   function sanityCheck( ) {
     return expectedresult;
