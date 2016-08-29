@@ -8,10 +8,8 @@ component accessors="true" {
   function solve( ) {
     var parents = { "" = {} };
 
-    for ( row in testData ) {
-      parents[ row.id ] = { 
-        nodeText = row.nodeText 
-      };
+    for ( var row in testData ) {
+      parents[ row.id ] = { "nodeText" = row.nodeText };
 
       var parent = parents[ row.parentId ];
 
