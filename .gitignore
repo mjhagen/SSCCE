@@ -46,3 +46,4 @@ sftp-config.json
 *.md
 benchmark.cfc
 WEB-INF
+*.lck
