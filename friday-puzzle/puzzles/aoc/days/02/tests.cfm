@@ -1,5 +1,5 @@
 <cfscript>
-  it( "Coords translation to matrix", function( ) {
+  it( "Specific tests for this day", function( ) {
     var newPuzzle = puzzle.init();
 
     expect( newPuzzle.translateCoordsToDigitMatrix( [ -1,  1 ] ) ).toBe( 1 );

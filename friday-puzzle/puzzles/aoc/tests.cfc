@@ -1,29 +1,29 @@
 component extends=testbox.system.BaseSpec {
-  param url.day=1;
-  variables.dayNr = numberFormat( url.day, "00" );
-
   public void function run( ) {
-    describe( "aoc tests", function( ) {
-      var testsFile = "/cfroot/puzzles/aoc/days/#dayNr#/tests.cfm";
+    var allDays = directoryList( expandPath( "/cfroot/puzzles/aoc/days/" ), false, "name", "", "Directory", "dir" );
 
-      if( fileExists( expandPath( testsFile ) ) ) {
-        beforeEach( function() {
-          puzzle = createObject( "cfroot.puzzles.aoc.days.#dayNr#.puzzle" ).init( );
-        } );
+    if ( structKeyExists( url, "day" ) ) {
+      allDays = numberformat( url.day, "00" );
+    }
 
-        include testsFile;
+    for ( var dayNr in allDays ) {
+      if ( !isNumeric( dayNr ) ) {
+        continue;
+      }
 
-        it( title = "Expects puzzle to match expected result", body = function( ) {
+      describe( "AoC Day #dayNr# tests", function( ) {
+        var puzzle = createObject( "cfroot.puzzles.aoc.days.#dayNr#.puzzle" ).init( );
+
+        include "/cfroot/puzzles/aoc/days/#dayNr#/tests.cfm";
+
+        it( "Expects puzzle to match expected result", function( ) {
+          puzzle.init();
           var expectedResult = puzzle.getExpectedResult( );
           var solution = puzzle.solve( );
+
           expect( solution ).toBe( expectedResult );
         } );
-      } else {
-        it( "Expects puzzle to have tests", function( ) {
-          expect( fileExists( expandPath( testsFile ) ) )
-            .toBeTrue( "Day #dayNr# doesn't have tests." );
-        } );
-      }
-    } );
+      } );
+    }
   }
 }
