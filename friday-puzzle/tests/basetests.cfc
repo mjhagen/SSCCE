@@ -39,7 +39,6 @@ component extends=testbox.system.BaseSpec {
         var solution = puzzle.solve();
         expect( solution )
           .toBe( expectedResult );
-
       });
     });
   }
