@@ -4,7 +4,7 @@ component accessors="true" {
 
   function init( ) {
     variables.testData = "";
-    variables.expectedResult = "something";
+    variables.expectedResult = "D4CD2EE1";
 
     include "input-data.cfm"; // sets testData
 
@@ -12,6 +12,24 @@ component accessors="true" {
   }
 
   function solve( ) {
-    return "nothing-yet";
+    return decodePassword( );
+  }
+
+  function decodePassword( ) {
+    var decodedPassword = "";
+    var usedHashes = [ ];
+    var passwordLength = 0;
+    var i = 0;
+
+    do {
+      do {
+        var testHash = hash( testData & i );
+        i++;
+      } while ( compare( left( testHash, 5 ), "00000" ) != 0 );
+      decodedPassword &= mid( testHash, 6, 1 );
+      passwordLength++;
+    } while ( passwordLength < 8 );
+
+    return decodedPassword;
   }
 }
