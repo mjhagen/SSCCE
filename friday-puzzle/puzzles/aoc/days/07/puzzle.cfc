@@ -4,7 +4,7 @@ component accessors="true" {
 
   function init( ) {
     variables.testData = "";
-    variables.expectedResult = "something";
+    variables.expectedResult = 105;
 
     include "input-data.cfm"; // sets testData
 
