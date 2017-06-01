@@ -1,39 +1,69 @@
 component {
   resetTimers( );
 
+  function init( ) {
+    variables.system = createObject( "java", "java.lang.System" );
+
+    return this;
+  }
+
   function start( timer = createUUID() ) {
-    var timeNow = getTickCount( );
+    stop( );
     variables.currentTimer = {
       name = timer,
-      time = timeNow
+      time = variables.system.nanoTime( )
     };
   }
 
   function stop( ) {
-    var timeNow = getTickCount( );
+    var timeNow = variables.system.nanoTime( );
 
     if ( !structKeyExists( variables, "currentTimer" ) ) {
-      throw( "Missing .start() statement." );
+      return;
     }
 
-    if ( !structKeyExists( variables.timers, variables.currentTimer.name ) ) {
-      variables.timers[ variables.currentTimer.name ] = [ ];
+    var timerName = variables.currentTimer.name;
+
+    if ( !structKeyExists( variables.timers, timerName ) ) {
+      variables.timers[ timerName ] = [ ];
     }
 
-    arrayAppend( variables.timers[ variables.currentTimer.name ], timeNow - variables.currentTimer.time );
+    arrayAppend( variables.timers[ timerName ], timeNow - variables.currentTimer.time );
 
     structDelete( variables, "currentTimer" );
   }
 
   function output( ) {
+    writeOutput( '<table>' );
+
     for ( var key in timers ) {
-      writeOutput( "#key#: #arrayAvg( timers[ key ] )#<br />" );
+      writeOutput( '<tr><td>#key#:</td><td>#numberFormat( arrayAvg( timers[ key ] ) / 1000, ',.00000' )#</td></tr>' );
     }
+
+    writeOutput( '<table>' );
+
+    writeOutput( outputServerInfo( ) );
 
     resetTimers( );
   }
 
   private function resetTimers( ) {
-    variables.timers = {};
+    variables.timers = structNew( "ordered" );
+  }
+
+  private function outputServerInfo( ) {
+    var result = "CF Server: " & server.coldfusion.productName;
+
+    if ( structKeyExists( server, "lucee" ) ) {
+      result &= " " & server.lucee.version;
+    } else {
+      result &= " " & server.coldfusion.productVersion;
+    }
+
+    var javaLangSystem = createObject( "java", "java.lang.System" );
+
+    result &= "<br>Java Version: #javaLangSystem.getProperty( 'java.version' )#";
+
+    return result;
   }
 }

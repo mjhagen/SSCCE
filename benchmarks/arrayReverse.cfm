@@ -30,17 +30,24 @@
     arrayAppend( adamsArray, i );
   }
 
-  for ( i = 0; i < 10000; i++ ) {
+  variables.arrayOne = duplicate( adamsArray );
+  for ( i = 0; i < 1000; i++ ) {
     request.benchmark.start( "arrayReverseUsingLoop" );
-    arrayReverseUsingLoop( adamsArray );
+    arrayReverseUsingLoop( variables.arrayOne );
     request.benchmark.stop( );
+  }
 
+  variables.arrayTwo = duplicate( adamsArray );
+  for ( i = 0; i < 1000; i++ ) {
     request.benchmark.start( "arrayReverseUsingReduce" );
-    arrayReverseUsingReduce( adamsArray );
+    arrayReverseUsingReduce( variables.arrayTwo );
     request.benchmark.stop( );
+  }
 
+  variables.arrayThree = duplicate( adamsArray );
+  for ( i = 0; i < 1000; i++ ) {
     request.benchmark.start( "arrayReverseUsingCollections" );
-    arrayReverseUsingCollections( adamsArray );
+    arrayReverseUsingCollections( variables.arrayThree );
     request.benchmark.stop( );
   }
 

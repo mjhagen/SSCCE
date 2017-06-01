@@ -27,7 +27,7 @@ component extends=cfroot.abstractPuzzle accessors="true" {
     for ( var child in testData ) {
       memory[ child.id ] = { 'nodeText': child.nodeText };
 
-      if ( child.parentID.len() ) {
+      if ( child.parentID.len( ) ) {
         if ( !memory[ child.parentID ].keyExists( 'children' ) ) {
           memory[ child.parentID ][ 'children' ] = [ ];
         }

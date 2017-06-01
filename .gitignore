@@ -46,3 +46,4 @@ sftp-config.json
 *.md
 WEB-INF
 *.lck
+*.zip

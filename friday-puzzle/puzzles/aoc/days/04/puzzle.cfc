@@ -5,6 +5,7 @@ component accessors="true" {
   function init( ) {
     variables.testData = "";
     variables.expectedResult = "278221";
+    variables.validRooms = [];
 
     include "input-data.cfm"; // sets testData
 
@@ -17,11 +18,24 @@ component accessors="true" {
 
     for( var room in rooms ) {
       if( makeChecksum( room.encryptedName ) == room.checksum ) {
+        arrayAppend( validRooms, room );
         arrayAppend( validRoomIds, room.sectorId );
       }
     }
 
     return arraySum( validRoomIds );
+  }
+
+  function solvePartTwo( ) {
+    solve();
+
+    for( var room in validRooms ) {
+      if( decypher( listFirst( room.original, '[' ) ) contains 'northpole' ) {
+        return room.sectorId;
+      }
+    }
+
+    return "failed";
   }
 
   function makeChecksum( encryptedName ) {
@@ -64,6 +78,32 @@ component accessors="true" {
     return "";
   }
 
+  function decypher( input ) {
+    var sectorId = listLast( input, "-" );
+    var shiftBy = sectorId % 26;
+    var result = "";
+    var inputLength = len( input );
+
+    for ( var i = 1; i < inputLength; i++ ) {
+      var char = uCase( mid( input, i, 1 ) );
+
+      if ( char == "-" || isNumeric( char ) ) {
+        result &= " ";
+        continue;
+      }
+
+      var shifted = asc( char ) + shiftBy;
+
+      if ( shifted > 90 ) {
+        shifted = 64 + ( shifted - 90 );
+      }
+
+      result &= chr( shifted );
+    }
+
+    return lCase( trim( result ) );
+  }
+
   function convertInputToArray() {
     var result = [];
     var testDataAsArray = listToArray( testData, chr( 13 ) & chr( 10 ) );
@@ -72,6 +112,7 @@ component accessors="true" {
       var decodedRoom = reFind( '([^\d]+)(\d+)\[([^\]]+)\]', room, 1, true );
 
       arrayAppend( result, {
+        original = room,
         encryptedName = replace( decodedRoom.match[ 2 ], "-", "", "all" ),
         sectorId = decodedRoom.match[ 3 ],
         checksum = decodedRoom.match[ 4 ]

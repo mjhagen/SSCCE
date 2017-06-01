@@ -12,6 +12,14 @@ component accessors="true" {
   }
 
   function solve( ) {
+    return solution( );
+  }
+
+  function solvePartTwo( ) {
+    return solution( 2 );
+  }
+
+  function solution( part = 1 ) {
     var result = "";
     var messageLength = len( listFirst( trim( testData ), chr( 13 ) & chr( 10 ) ) );
     var messageData = reReplace( testData, "\s", "", "all" );
@@ -34,13 +42,16 @@ component accessors="true" {
     } while ( i < uncorrectedMessageLength );
 
     for( var uncorrectedLetter in dataBin ) {
-      var charCount = {};
+      var charCounts = {};
 
       for( var letter in alphabet ) {
-        charCount[ letter ] = listValueCount( uncorrectedLetter, letter );
+        var charCount = listValueCount( uncorrectedLetter, letter );
+        if( charCount > 0 ) {
+          charCounts[ letter ] = charCount;
+        }
       }
 
-      sortedKeys = structSort( charCount, "numeric", "desc" );
+      sortedKeys = structSort( charCounts, "numeric", part == 1 ? "desc" : "asc" );
 
       result &= sortedKeys[ 1 ];
     }

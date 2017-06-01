@@ -1,6 +1,7 @@
 component accessors="true" {
   property expectedResult;
   property testData;
+  property digitMatrix;
 
   function init( ) {
     variables.testData = "";
@@ -16,15 +17,17 @@ component accessors="true" {
       "L" = [ -1,  0 ]
     };
     variables.digitMatrix = [
-      [ 7, 4, 1 ],
-      [ 8, 5, 2 ],
-      [ 9, 6, 3 ]
+      [ 1, 2, 3 ],
+      [ 4, 5, 6 ],
+      [ 7, 8, 9 ]
     ];
 
     return this;
   }
 
   function solve( ) {
+    rotate90( );
+
     var decodedInstructions = decodeInstructions( testData );
     var code = "";
 
@@ -33,6 +36,18 @@ component accessors="true" {
     }
 
     return code;
+  }
+
+  function solvePartTwo( ) {
+    variables.digitMatrix = [
+      [ '0', '0', '1', '0', '0' ],
+      [ '0', '2', '3', '4', '0' ],
+      [ '5', '6', '7', '8', '9' ],
+      [ '0', 'A', 'B', 'C', '0' ],
+      [ '0', '0', 'D', '0', '0' ]
+    ];
+
+    return solve( );
   }
 
   function findNumber( encodedDigit ) {
@@ -45,12 +60,25 @@ component accessors="true" {
 
   function movePosition( direction ) {
     var movement = movementMatrix[ direction ];
+    var newX = cursor[ 1 ] + movement[ 1 ];
+    var newY = cursor[ 2 ] + movement[ 2 ];
+    var newCursor = [ newX, newY ];
+    var newValue = translateCoordsToDigitMatrix( newCursor );
 
-    variables.cursor = [
-      max( min( cursor[ 1 ] + movement[ 1 ], 1 ), - 1 ),
-      max( min( cursor[ 2 ] + movement[ 2 ], 1 ), - 1 )
-    ];
+    if ( newValue != 0 ) {
+      variables.cursor = newCursor;
+    }
   }
+
+  function translateCoordsToDigitMatrix( coords ) {
+    try {
+      return digitMatrix[ coords[ 1 ] + 2 ][ coords[ 2 ] + 2 ];
+    } catch ( any e ) {
+      return 0;
+    }
+  }
+
+  // helpers:
 
   function decodeInstructions( instructions ) {
     var instructionsAsArray = listToArray( instructions, chr( 13 ) & chr( 10 ) );
@@ -63,7 +91,30 @@ component accessors="true" {
     return output;
   }
 
-  function translateCoordsToDigitMatrix( coords ) {
-    return digitMatrix[ coords[ 1 ] + 2 ][ coords[ 2 ] + 2 ];
+  function rotate90( ) {
+    var n = arrayLen( digitMatrix );
+    var result = [ ];
+
+    for ( var i = 1; i <= n; ++i ) {
+      result[ i ] = [];
+      for ( var j = 1; j <= n; ++j ) {
+        result[ i ][ j ] = digitMatrix[ n - j + 1 ][ i ];
+      }
+    }
+
+    variables.digitMatrix = result;
+  }
+
+  function printMatrix( ) {
+    var n = arrayLen( digitMatrix );
+
+    writeOutput( "<pre>" );
+    for ( var i = 1; i <= n; ++i ) {
+      for ( var j = 1; j <= n; ++j ) {
+        writeOutput( digitMatrix[ i ][ j ] );
+      }
+      writeOutput( "<br />" );
+    }
+    writeOutput( "</pre>" );
   }
 }

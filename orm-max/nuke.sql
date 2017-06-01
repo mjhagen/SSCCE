@@ -1,0 +1,3 @@
+-- INSERT INTO foo ( id, "position" ) VALUES ( 1, 0 );
+-- INSERT INTO foo ( id, "position" ) VALUES ( 2, 42 );
+-- INSERT INTO foo ( id, "position" ) VALUES ( 3, 666 );
